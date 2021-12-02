@@ -8,7 +8,7 @@ from commands import comm as com
 
 tchannels = []
 
-with open('config.json') as f:
+with open('../config.json') as f:
 	config = json.load(f)
 prefix = config['prefix']
 token = config['token']
