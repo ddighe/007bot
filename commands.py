@@ -1,8 +1,10 @@
 import discord
 import random
 import time
+import copy
 tchannels = []
 messages = []
+players = [689939738911965198]
 Greet = ["Hello","Hey","Hi","Howdy","Yo","WHAZZUP","G'DAY"]
 greet = ["hello","hey","hi","howdy","yo","whazzup","g'day"]
 
@@ -12,31 +14,28 @@ greet = ["hello","hey","hi","howdy","yo","whazzup","g'day"]
 
 
 class comm(object):
-	"""docstring for comm"""
-	def __init__(self, arg):
-		super(comm, self).__init__()
-		self.arg = arg
-	async def test(message):
-		if message.content == "$test":
-			print("YAY")
-	async def newchannel(message):
-			guild = message.guild
-			nchannel = await guild.create_text_channel("{0.author.name}".format(message)+"'s terminal channel") 
-			tchannels.append((nchannel.id, message.author.id))
-			await nchannel.send("[{0.author.name}@".format(message)+message.guild.name+" **~**]$ ")
+    """docstring for comm"""
+    def __init__(self, arg):
+        super(comm, self).__init__()
+        self.arg = arg
+    async def test(message):
+        if message.content == "$test":
+            print("YAY")
+    async def newchannel(message):
+        if message.author.id not in players:
+            players.append(message.author.id)
+            await message.author.send("hello")
+    async def assignments(client):
+        random.shuffle(players)
+        print(*players)
+        for i in range(len(players)):
+            user = await client.fetch_user(players[i])
+            print(user)
+            tokill = await client.fetch_user(players[(i+1)%(len(players))])
+            await user.send("Your assginment, if you choose to accept, is to inconspicuously kill "+ tokill)
+            print(players[i],"buys for",players[(i+1)%(len(players))])
 
 
-	async def terminals(message, channel):
-		#create channel for only the message.author.id
-		if (message.channel.id, message.author.id) in tchannels:
-			if (message.content == "exit" or message.content == "stop"):
-				await channel.delete()
-		if(message.content.lower() == "f"):
-			await message.add_reaction("🇫")
-		if(message.content.lower() == "beep"):
-			await message.channel.send("boop")
-		#out of range beepboopbot
-		for i in greet:
-			if message.content.lower().startswith(i) or message.content.lower().endswith(i) or (" "+i+" ") in message.content.lower():
-				a = await message.channel.send(Greet[random.randint(0,len(greet)-1)])
-				await a.add_reaction("👋")
+
+#gangs?
+#people to trust (like the disable gifts for in secret santa)
