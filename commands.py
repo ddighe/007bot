@@ -4,7 +4,7 @@ import time
 import copy
 tchannels = []
 messages = []
-players = [689939738911965198]
+players = []
 Greet = ["Hello","Hey","Hi","Howdy","Yo","WHAZZUP","G'DAY"]
 greet = ["hello","hey","hi","howdy","yo","whazzup","g'day"]
 
@@ -27,8 +27,7 @@ class comm(object):
             await message.author.send("hello")
     async def assignments(client):
         random.shuffle(players)
-        print(*players)
-        for i in range(len(players)):
+        for i in range(0,len(players)-1):
             user = await client.fetch_user(players[i])
             print(user)
             tokill = await client.fetch_user(players[(i+1)%(len(players))])

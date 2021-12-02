@@ -23,14 +23,6 @@ class MyClient(discord.Client):
 		print('------')
 	async def on_message(self, message):
 		
-		
-		async def voicechat(user):
-			#if people in voicechannel
-				#create text channel for only those in voice channel
-			pass
-
-		#adding messages to array
-		
 		# we do not want the bot to reply to itself
 		if message.author.id == self.user.id:
 			return
